@@ -7,13 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@types/node-fetch": "^2.6.12",
     "next": "15.3.2",
+    "node-fetch": "^2.6.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "unsplash-js": "^7.0.19"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
