@@ -52,14 +52,13 @@ type CoverPhoto = {
   };
 };
 
-export type CollectionResponse = {
+export type Collection = {
   id: number;
   title: string;
   description: string;
   published_at: string;
   last_collected_at: string;
   updated_at: string;
-  featured: boolean;
   total_photos: number;
   private: boolean;
   share_key: string;
@@ -69,30 +68,51 @@ export type CollectionResponse = {
     self: string;
     html: string;
     photos: string;
+    related: string;
   };
+  preview_photos: Array<{
+    id: string;
+    slug: string;
+    asset_type: string;
+    blur_hash: string;
+    created_at: string;
+    updated_at: string;
+    urls: {
+      raw: string;
+      full: string;
+      regular: string;
+      small: string;
+      small_s3: string;
+      thumb: string;
+    };
+  }>;
 };
+
+export type CollectionResponse = Collection;
+
+// export type CollectionResponse = {
+//   id: number;
+//   title: string;
+//   description: string;
+//   published_at: string;
+//   last_collected_at: string;
+//   updated_at: string;
+//   featured: boolean;
+//   total_photos: number;
+//   private: boolean;
+//   share_key: string;
+//   cover_photo: CoverPhoto;
+//   user: User;
+//   links: {
+//     self: string;
+//     html: string;
+//     photos: string;
+//   };
+// };
 
 export type CollectionsResponse = {
   total: number;
-  results: Array<{
-    id: number;
-    title: string;
-    description: string;
-    published_at: string;
-    last_collected_at: string;
-    updated_at: string;
-    total_photos: number;
-    private: boolean;
-    share_key: string;
-    cover_photo: CoverPhoto;
-    user: User;
-    links: {
-      self: string;
-      html: string;
-      photos: string;
-      related: string;
-    };
-  }>;
+  results: Array<Collection>;
 };
 
 export type PhotoResponse = Awaited<ReturnType<ApiReturnType['photos']['get']>>['response'];
