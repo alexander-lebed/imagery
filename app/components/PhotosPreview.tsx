@@ -1,13 +1,14 @@
-import { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { getPhotos } from '@/app/utils/data';
 
 type Props = {
   topic: string;
+  onClick: MouseEventHandler;
 };
 
-const PhotosPreview: FC<Props> = ({ topic }) => {
+const PhotosPreview: FC<Props> = ({ topic, onClick }) => {
   const { data: photos, isLoading } = useQuery({
     queryKey: ['getPhotos', topic],
     queryFn: () => getPhotos({ query: topic, perPage: 3 }),
@@ -15,7 +16,11 @@ const PhotosPreview: FC<Props> = ({ topic }) => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col gap-2">
+      <div
+        className="flex flex-col gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+        onClick={onClick}
+        data-testid="photos-preview-loading"
+      >
         <div
           data-testid="loading-skeleton"
           className="animate-pulse bg-gray-200 h-48 rounded-lg"
@@ -27,7 +32,7 @@ const PhotosPreview: FC<Props> = ({ topic }) => {
 
   if (!photos || !photos.results || photos.results.length === 0) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2" data-testid="photos-preview-empty">
         <div className="flex items-center justify-center text-gray-500 h-48 rounded-lg bg-gray-100">
           No photos found for {topic}
         </div>
@@ -40,7 +45,11 @@ const PhotosPreview: FC<Props> = ({ topic }) => {
   const displayPhotos = photos.results.slice(0, 3);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      className="flex flex-col gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+      onClick={onClick}
+      data-testid="photos-preview"
+    >
       <div className="grid grid-cols-3 gap-1 h-48 overflow-hidden rounded-lg">
         {displayPhotos.map((photo, index) => (
           <div key={photo.id} className={`relative ${index === 0 ? 'col-span-2 row-span-2' : ''}`}>
