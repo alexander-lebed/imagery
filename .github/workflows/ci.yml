@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  pull_request:
+    # Trigger CI only when a pull request targets the `main` branch
+    branches: [main]
+
+# Cancel previously running workflow for the same PR branch
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: 🧹 Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Setup Node.js with pnpm caching
+      - name: Set up Node 24 + pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      # Enable corepack to allow using pnpm
+      - name: Enable corepack (pnpm)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run linter
+        run: pnpm run lint
+
+  test:
+    name: 🧪 Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Setup Node.js with pnpm caching
+      - name: Set up Node 24 + pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+     # Enable corepack to allow using pnpm
+      - name: Enable corepack (pnpm)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm run test
