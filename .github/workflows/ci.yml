@@ -4,6 +4,9 @@ on:
   pull_request:
     # Trigger CI only when a pull request targets the `main` branch
     branches: [main]
+  push:
+    # Also trigger CI when pushing directly to the main branch
+    branches: [main]
 
 # Cancel previously running workflow for the same PR branch
 concurrency:
