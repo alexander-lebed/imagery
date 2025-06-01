@@ -3,6 +3,7 @@ build
 coverage
 .next
 node_modules
+pnpm-lock.yaml
 
 # Ignore all HTML files:
 *.html
