@@ -11,50 +11,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: 🧹 Lint
+  validate:
+    name: ${{ matrix.name }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: 🧹 Lint
+            command: lint
+          - name: 🧪 Test
+            command: test
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Setup Node.js with pnpm caching
-      - name: Set up Node 24 + pnpm cache
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.10.0
+
+      # Node.js with pnpm caching
+      - name: Set up Node 24
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: 'pnpm'
 
-      # Enable corepack to allow using pnpm
-      - name: Enable corepack (pnpm)
-        run: corepack enable
-
+      # Install dependencies
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run linter
-        run: pnpm run lint
-
-  test:
-    name: 🧪 Test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      # Setup Node.js with pnpm caching
-      - name: Set up Node 24 + pnpm cache
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-     # Enable corepack to allow using pnpm
-      - name: Enable corepack (pnpm)
-        run: corepack enable
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Run tests
-        run: pnpm run test
+      # Run the command based on matrix
+      - name: Run ${{ matrix.command }}
+        run: pnpm run ${{ matrix.command }}
