@@ -2,8 +2,8 @@
 
 import { Suspense } from 'react';
 import { HydrationBoundary, DehydratedState } from '@tanstack/react-query';
+import PhotoCollage from '@/app/components/PhotoCollage';
 import Photos from '@/app/components/Photos';
-import PhotosPreview from '@/app/components/PhotosPreview';
 import { TOPICS } from '@/app/constants';
 import { useDebouncedSearchParam } from '@/app/hooks';
 
@@ -27,7 +27,7 @@ function HomeContent() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
           {TOPICS.map(topic => (
-            <PhotosPreview key={topic} topic={topic} onClick={() => setSearch(topic)} />
+            <PhotoCollage key={topic} topic={topic} onClick={() => setSearch(topic)} />
           ))}
         </div>
       )}

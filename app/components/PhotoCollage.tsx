@@ -8,7 +8,7 @@ type Props = {
   onClick: MouseEventHandler;
 };
 
-const PhotosPreview: FC<Props> = ({ topic, onClick }) => {
+const PhotoCollage: FC<Props> = ({ topic, onClick }) => {
   const { data: photos, isLoading } = useQuery({
     queryKey: ['getPhotos', topic],
     queryFn: () => getPhotos({ query: topic, perPage: 3 }),
@@ -67,4 +67,4 @@ const PhotosPreview: FC<Props> = ({ topic, onClick }) => {
   );
 };
 
-export default PhotosPreview;
+export default PhotoCollage;

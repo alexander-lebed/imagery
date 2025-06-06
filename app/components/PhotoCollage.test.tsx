@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { photos } from '@/app/mockedData';
-import PhotosPreview from '../components/PhotosPreview';
+import PhotoCollage from './PhotoCollage';
 
 // Mock the useQuery hook
 const mockUseQuery = useQuery as jest.Mock;
@@ -20,7 +20,7 @@ describe('PhotosPreview', () => {
       isLoading: true,
     });
 
-    render(<PhotosPreview topic="nature" onClick={mockOnClick} />);
+    render(<PhotoCollage topic="nature" onClick={mockOnClick} />);
 
     // Check if loading UI is displayed
     expect(screen.getByText('nature')).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('PhotosPreview', () => {
       isLoading: false,
     });
 
-    render(<PhotosPreview topic="nonexistent" onClick={mockOnClick} />);
+    render(<PhotoCollage topic="nonexistent" onClick={mockOnClick} />);
 
     // Check if no results UI is displayed
     expect(screen.getByText('nonexistent')).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('PhotosPreview', () => {
       isLoading: false,
     });
 
-    render(<PhotosPreview topic="landscapes" onClick={mockOnClick} />);
+    render(<PhotoCollage topic="landscapes" onClick={mockOnClick} />);
 
     // Check if photos are displayed
     expect(screen.getByText('landscapes')).toBeInTheDocument();

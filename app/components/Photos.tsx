@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import Photo from '@/app/components/Photo';
+import { Photo } from '@/app/components/ui';
 import { useDebouncedValue } from '@/app/hooks';
 import { getPhotos } from '@/app/utils/data';
 
