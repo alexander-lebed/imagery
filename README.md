@@ -20,7 +20,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODO
 
-- Fix navigation with browser Back and Forth buttons and query search param
 - SSR images with query search param
 - Improve usage of types
 

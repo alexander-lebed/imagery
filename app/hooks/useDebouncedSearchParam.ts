@@ -18,15 +18,24 @@ export const useDebouncedSearchParam = (
   const router = useRouter();
   const debouncedValue = useDebouncedValue(value);
 
+  // Keep the input value in sync with the URL when navigating
+  useEffect(() => {
+    const urlValue = searchParams.get(searchParam) || '';
+    setValue(urlValue);
+  }, [searchParams, searchParam]);
+
   // Update search value in the URL
   useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (debouncedValue) {
-      params.set(searchParam, debouncedValue);
-    } else {
-      params.delete(searchParam);
+    const currentValue = searchParams.get(searchParam) || '';
+    if (currentValue !== debouncedValue) {
+      const params = new URLSearchParams(searchParams.toString());
+      if (debouncedValue) {
+        params.set(searchParam, debouncedValue);
+      } else {
+        params.delete(searchParam);
+      }
+      router.replace(`?${params.toString()}`);
     }
-    router.replace(`?${params.toString()}`);
   }, [debouncedValue, router, searchParam, searchParams]);
 
   return [value, setValue];
