@@ -12,16 +12,18 @@ function HomeContent() {
   const [search, setSearch] = useDebouncedSearchParam('search');
   return (
     <div className="flex flex-col gap-6">
-      <div className="w-full max-w-2xl mx-auto pt-8">
-        <Input
-          type="text"
-          aria-label="Search photos"
-          placeholder="Search photos..."
-          clearable
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          onClear={() => setSearch('')}
-        />
+      <div className="sticky top-0 z-10 w-full pb-4 pt-8 bg-[var(--background)]">
+        <div className="w-full max-w-2xl mx-auto">
+          <Input
+            type="text"
+            aria-label="Search photos"
+            placeholder="Search photos..."
+            clearable
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            onClear={() => setSearch('')}
+          />
+        </div>
       </div>
 
       {search ? (
