@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { HydrationBoundary, DehydratedState } from '@tanstack/react-query';
 import PhotoCollage from '@/app/components/PhotoCollage';
 import Photos from '@/app/components/Photos';
+import Input from '@/app/components/ui/Input';
 import { TOPICS } from '@/app/constants';
 import { useDebouncedSearchParam } from '@/app/hooks';
 
@@ -12,13 +13,14 @@ function HomeContent() {
   return (
     <div className="flex flex-col gap-6">
       <div className="w-full max-w-2xl mx-auto pt-8">
-        <input
+        <Input
           type="text"
+          aria-label="Search photos"
           placeholder="Search photos..."
+          clearable
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          aria-label="Search photos"
+          onClear={() => setSearch('')}
         />
       </div>
 
