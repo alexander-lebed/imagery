@@ -1,5 +1,7 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import * as PhotoApi from 'unsplash-js/src/methods/photos/types';
+import PhotoModal from '@/app/components/PhotoModal';
 import { Photo } from '@/app/components/ui';
 import { useDebouncedValue } from '@/app/hooks';
 import { getPhotos } from '@/app/utils/data';
@@ -18,6 +20,7 @@ const Photos: FC<Props> = ({ search }) => {
     enabled: !!debouncedSearch, // don't fetch if `search` is empty
     placeholderData: keepPreviousData,
   });
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoApi.Basic | null>(null);
 
   const photos = data?.results || [];
 
@@ -46,14 +49,18 @@ const Photos: FC<Props> = ({ search }) => {
   }
 
   return (
-    <div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8"
-      data-testid="photos-grid"
-    >
-      {photos.map(photo => (
-        <Photo key={photo.id} photo={photo} />
-      ))}
-    </div>
+    <>
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8"
+        data-testid="photos-grid"
+      >
+        {photos.map(photo => (
+          <Photo key={photo.id} photo={photo} onClick={() => setSelectedPhoto(photo)} />
+        ))}
+      </div>
+
+      {selectedPhoto && <PhotoModal onClose={() => setSelectedPhoto(null)} photo={selectedPhoto} />}
+    </>
   );
 };
 

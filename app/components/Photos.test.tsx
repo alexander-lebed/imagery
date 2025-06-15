@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { photos } from '@/app/mockedData';
 import Photos from './Photos';
 
@@ -81,5 +82,31 @@ describe('Photos', () => {
     expect(screen.getByAltText('Photo 1')).toBeInTheDocument();
     expect(screen.getByAltText('Photo 2')).toBeInTheDocument();
     expect(screen.getByAltText('Photo 3')).toBeInTheDocument();
+  });
+
+  it('displays photo modal when photo is clicked', async () => {
+    mockUseQuery.mockReturnValue({
+      data: { results: photos },
+      isLoading: false,
+      isError: false,
+    });
+
+    render(<Photos search="landscapes" />);
+
+    // Initially, modal should not be visible
+    expect(screen.queryByText('Loading image...')).not.toBeInTheDocument();
+
+    // Click on the first photo
+    await userEvent.click(screen.getByAltText('Photo 1'));
+
+    // Modal should now be visible with loading state
+    expect(screen.getByText('Loading image...')).toBeInTheDocument();
+
+    // Check that modal contains the clicked photo
+    const modalImages = screen.getAllByRole('img');
+    const modalPhoto = modalImages.find(img =>
+      img.getAttribute('src')?.includes(photos[0].urls.full || photos[0].urls.regular)
+    );
+    expect(modalPhoto).toBeInTheDocument();
   });
 });
