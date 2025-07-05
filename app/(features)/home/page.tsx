@@ -4,6 +4,9 @@ import { getQueryClient } from '@/app/utils/data';
 import { getPhotos } from '@/app/utils/data';
 import Home from './Home';
 
+// Revalidate this page every hour (3600 seconds)
+export const revalidate = 3600;
+
 export default async function Page() {
   const queryClient = getQueryClient();
 
