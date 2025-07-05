@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useState, useCallback, MouseEventHandler } from 'react';
 import Image from 'next/image';
 import { Modal } from '@/app/components/ui';
 import { Photo } from '@/app/types';
+import { downloadPhoto } from '@/app/utils';
 
 export type PhotoModalProps = {
   isOpen?: boolean;
@@ -11,6 +12,14 @@ export type PhotoModalProps = {
 
 const PhotoModal: FC<PhotoModalProps> = ({ isOpen = true, onClose, photo }) => {
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleDownload: MouseEventHandler<HTMLButtonElement> = useCallback(
+    async e => {
+      e.stopPropagation();
+      await downloadPhoto(photo);
+    },
+    [photo]
+  );
 
   if (!photo) return null;
 
@@ -36,9 +45,31 @@ const PhotoModal: FC<PhotoModalProps> = ({ isOpen = true, onClose, photo }) => {
           onError={() => setIsLoading(false)}
         />
 
-        {photo.alt_description && !isLoading && (
-          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 rounded-b-lg">
-            <p className="text-sm">{photo.alt_description}</p>
+        {!isLoading && (
+          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white py-4 rounded-b-lg">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handleDownload}
+                className="bg-white/20 hover:bg-white/30 text-white rounded-full p-2 cursor-pointer transition-colors duration-200 flex-shrink-0"
+                title="Download photo"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7,10 12,15 17,10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </button>
+              <p className="text-sm flex-1">{photo.alt_description || 'Photo'}</p>
+            </div>
           </div>
         )}
       </div>
