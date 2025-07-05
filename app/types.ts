@@ -1,5 +1,6 @@
 // Types for Unsplash API responses
 import { createApi } from 'unsplash-js';
+import * as PhotoApi from 'unsplash-js/src/methods/photos/types';
 
 type ApiReturnType = ReturnType<typeof createApi>;
 
@@ -98,3 +99,5 @@ export type CollectionsResponse = {
 export type PhotoResponse = Awaited<ReturnType<ApiReturnType['photos']['get']>>['response'];
 
 export type PhotosResponse = Awaited<ReturnType<ApiReturnType['search']['getPhotos']>>['response'];
+
+export type Photo = PhotoApi.Basic & { slug?: string };

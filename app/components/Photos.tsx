@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import * as PhotoApi from 'unsplash-js/src/methods/photos/types';
 import PhotoModal from '@/app/components/PhotoModal';
 import { Photo } from '@/app/components/ui';
 import { useDebouncedValue } from '@/app/hooks';
+import { Photo as PhotoType } from '@/app/types';
 import { getPhotos } from '@/app/utils/data';
 
 type Props = {
@@ -20,7 +20,7 @@ const Photos: FC<Props> = ({ search }) => {
     enabled: !!debouncedSearch, // don't fetch if `search` is empty
     placeholderData: keepPreviousData,
   });
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoApi.Basic | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoType | null>(null);
 
   const photos = data?.results || [];
 

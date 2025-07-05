@@ -1,12 +1,12 @@
 import { FC, useState } from 'react';
 import Image from 'next/image';
-import * as PhotoApi from 'unsplash-js/src/methods/photos/types';
 import { Modal } from '@/app/components/ui';
+import { Photo } from '@/app/types';
 
 export type PhotoModalProps = {
   isOpen?: boolean;
   onClose: () => void;
-  photo: PhotoApi.Basic;
+  photo: Photo;
 };
 
 const PhotoModal: FC<PhotoModalProps> = ({ isOpen = true, onClose, photo }) => {

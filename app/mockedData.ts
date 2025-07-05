@@ -1,10 +1,11 @@
-import * as PhotoApi from 'unsplash-js/src/methods/photos/types';
+import { Photo } from '@/app/types';
 
-export const photos: Array<PhotoApi.Basic> = Array(3)
+export const photos: Array<Photo> = Array(3)
   .fill(null)
   .map((_, index) => {
-    const photo: Partial<PhotoApi.Basic> = {
+    const photo: Partial<Photo> = {
       id: String(index + 1),
+      slug: `slug-${index + 1}`,
       alt_description: `Photo ${index + 1}`,
       urls: {
         regular: `photo${index + 1}.jpg`,
@@ -15,4 +16,4 @@ export const photos: Array<PhotoApi.Basic> = Array(3)
       },
     };
     return photo;
-  }) as Array<PhotoApi.Basic>;
+  }) as Array<Photo>;
