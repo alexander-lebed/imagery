@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import PhotoModal from '@/app/components/PhotoModal';
-import { Photo } from '@/app/components/ui';
 import { useDebouncedValue } from '@/app/hooks';
 import { Photo as PhotoType } from '@/app/types';
+import { Photo } from '@/app/ui';
 import { getPhotos } from '@/app/utils/data';
+import PhotoModal from './PhotoModal';
 
 type Props = {
   search: string;

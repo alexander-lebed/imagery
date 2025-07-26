@@ -2,11 +2,10 @@
 
 import { Suspense } from 'react';
 import { HydrationBoundary, DehydratedState } from '@tanstack/react-query';
-import PhotoCollage from '@/app/components/PhotoCollage';
-import Photos from '@/app/components/Photos';
-import Input from '@/app/components/ui/Input';
 import { TOPICS } from '@/app/constants';
+import { PhotoCollage, Photos } from '@/app/features';
 import { useDebouncedSearchParam } from '@/app/hooks';
+import { Input } from '@/app/ui';
 
 function HomeContent() {
   const [search, setSearch] = useDebouncedSearchParam('search');

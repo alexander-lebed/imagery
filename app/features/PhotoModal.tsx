@@ -1,7 +1,7 @@
 import { FC, useState, useCallback, MouseEventHandler } from 'react';
 import Image from 'next/image';
-import { Modal } from '@/app/components/ui';
 import { Photo } from '@/app/types';
+import { Modal } from '@/app/ui';
 import { downloadPhoto } from '@/app/utils';
 
 export type PhotoModalProps = {
