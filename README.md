@@ -4,6 +4,10 @@ Unearth the photos and illustrations that ignite new ideas. Type a word, theme, 
 
 https://your-imagery.vercel.app
 
+## Preview
+
+![Imagery screenshot](./docs/screenshot.jpg)
+
 ## Getting Started
 
 Install and run the development server:
